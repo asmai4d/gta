@@ -51,7 +51,6 @@ end)
 
 -- GET PROPERTY
 function GetPropertyData(propertyId, id)
-    zzzzzz
     return false
 end
 
