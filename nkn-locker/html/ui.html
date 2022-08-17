@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>container</title>
+<script id="applicationScript" type="text/javascript" src="js/rescale.js"></script>
+<link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" id="applicationStylesheet" href="css/style.css"/>
+<script  type="text/javascript" src="js/app.js"></script>
+</head>
+<body>
+<div id="container" >
+	<div id="main">
+		<div id="background">
+			<svg class="border_j">
+				<linearGradient id="border_j" spreadMethod="pad" x1="0.5" x2="0.5" y1="0" y2="1">
+					<stop offset="0" stop-color="#d0e2ed" stop-opacity="1"></stop>
+					<stop offset="1" stop-color="#8ea2be" stop-opacity="1"></stop>
+				</linearGradient>
+				<rect id="border_j" rx="14" ry="14" x="0" y="0" width="1122" height="683">
+				</rect>
+			</svg>
+			<svg class="background_k">
+				<rect id="background_k" rx="11" ry="11" x="0" y="0" width="1112" height="673">
+				</rect>
+			</svg>
+		</div>
+		<div id="leftside" >
+			<svg class="leftside-bakcground">
+				<rect id="leftside-bakcground" rx="12" ry="12" x="0" y="0" width="515" height="551">
+				</rect>
+			</svg>
+			<div id="items-left">
+			
+		
+			</div>
+		</div>
+		<div id="rightside">
+			<svg class="rightside-background">
+				<rect id="rightside-background" rx="12" ry="12" x="0" y="0" width="515" height="551">
+				</rect>
+			</svg>
+			<div id="items-right">
+			</div>
+		</div>
+		<div id="header">
+			<img id="serverlogo" src="img/serverlogo.png" srcset="img/serverlogo.png 1x, img/serverlogo@2x.png 2x">
+				
+			<div id="headspan">
+				<span>NKN</span><span style="font-style:normal;font-weight:lighter;color:rgba(255,255,255,1);"> - Schließfächer</span>
+			</div>
+			<div id="inputplace">
+				<input id="input" type="number" value="1">
+			</div>
+			<div id="closebutton" onclick="closeUI()">
+				<svg class="closebackground">
+					<rect id="closebackground" rx="6" ry="6" x="0" y="0" width="124" height="28">
+					</rect>
+				</svg>
+				<svg class="closexbackground">
+					<rect id="closexbackground" rx="6" ry="6" x="0" y="0" width="29" height="28">
+					</rect>
+				</svg>
+				<div id="closespan">
+					<span>Schließen</span>
+				</div>
+				<div id="closexspan">
+					<span>X</span>
+				</div>
+			</div>
+			<div id="kilospan">
+				<span>50 /</span><span style="color:rgba(143,164,191,1);"> 100 KG</span>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

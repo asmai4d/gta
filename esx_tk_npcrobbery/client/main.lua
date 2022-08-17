@@ -1,0 +1,517 @@
+ESX = nil
+local PlayerData = {}
+
+TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end) 
+
+RegisterNetEvent('esx:playerLoaded')
+AddEventHandler('esx:playerLoaded', function(xPlayer)
+    ESX.PlayerData = xPlayer   
+end)
+
+RegisterNetEvent('esx:setJob')
+AddEventHandler('esx:setJob', function(job)
+    ESX.PlayerData.job = job
+end)
+
+local npcs = {}
+local closestPed, chosenPed, prop
+local shouldUpdate, canSee, canInteract, beingRobbed, menuOpen, isArmed, onCooldown = false, false, false, false, false, false, false
+local cooldownTime = 0
+
+Citizen.CreateThread(function()
+    while true do
+        closestPed = ESX.Game.GetClosestPed(GetEntityCoords(PlayerPedId()))
+        Wait(500)
+    end
+end)
+
+Citizen.CreateThread(function()
+    while true do
+        if onCooldown then
+            cooldownTime = cooldownTime + 1
+            if cooldownTime >= Config.CooldownTime then
+                onCooldown = false
+                cooldownTime = 0
+            end
+        end
+        Wait(1000)
+    end
+end)
+
+Citizen.CreateThread(function()
+    while true do
+        local wait = 250
+        if shouldUpdate then
+            local playerPed = PlayerPedId()
+            if Config.CanRobWithMelee then
+                if IsPedArmed(playerPed, 1) or IsPedArmed(playerPed, 4) then
+                    isArmed = true
+                else
+                    isArmed = false
+                end
+            else
+                if IsPedArmed(playerPed, 4) then
+                    isArmed = true
+                else
+                    isArmed = false
+                end
+            end
+        else
+            wait = 500
+        end
+        Wait(wait)
+    end
+end)
+
+Citizen.CreateThread(function()
+    while true do
+        local wait = 500
+        local playerPed = PlayerPedId()
+        local playerCoords = GetEntityCoords(playerPed)
+        local closestPedCoords = GetEntityCoords(closestPed)
+        local dist = #(playerCoords - closestPedCoords)
+        if dist ~= 1 and dist <= 30 then
+            shouldUpdate = true
+            if dist <= 15 then
+                wait = 250
+                if dist <= Config.SeeDistance then
+                    canSee = true
+                    if dist <= Config.InteractDistance then
+                        canInteract = true
+                    else
+                        canInteract = false
+                    end
+                else
+                    canInteract = false
+                    canSee = false
+                end
+            end
+        else
+            canSee = false
+            canInteract = false
+            shouldUpdate = false
+            wait = 1000
+        end
+        Wait(wait)
+    end
+end)
+
+Citizen.CreateThread(function()
+    while true do
+        local wait = 0
+        if canSee and not menuOpen then
+            if not IsPedDeadOrDying(closestPed) and not IsPedAPlayer(closestPed) and GetPedType(closestPed) ~= 28 and not IsPedInAnyVehicle(closestPed, true) and not IsEntityAMissionEntity(closestPed) then
+                if npcs[closestPed] == nil then
+                    if not Config.TextOnlyWhenAiming or IsPlayerFreeAimingAtEntity(PlayerId(), closestPed) or IsPedInMeleeCombat(PlayerPedId()) then
+                        DrawRobText()
+                    end
+                end
+            else
+                wait = 100
+            end
+        else
+            wait = 100
+        end
+        Wait(wait)
+    end
+end)
+
+function DrawRobText()
+    local closestPedCoords = GetEntityCoords(closestPed)
+    local drawCoords = vector3(closestPedCoords.x, closestPedCoords.y, closestPedCoords.z + 0.82)
+    -- DrawText3D(drawCoords, _U('press_to_rob'))
+end
+
+Citizen.CreateThread(function()
+    while true do
+        local wait = 0
+        if canInteract and not menuOpen then
+            if isArmed and GetEntityPlayerIsFreeAimingAt(PlayerId()) then
+            -- if IsControlJustPressed(0, 38) then
+                if npcs[closestPed] == nil then
+                    if not Config.TextOnlyWhenAiming or IsPlayerFreeAimingAtEntity(PlayerId(), closestPed) or IsPedInMeleeCombat(PlayerPedId()) then
+                        if not IsPedDeadOrDying(closestPed) and not IsPedAPlayer(closestPed) and GetPedType(closestPed) ~= 28 and not IsPedInAnyVehicle(closestPed, true) and not IsEntityAMissionEntity(closestPed) then
+                            ESX.TriggerServerCallback('esx_tk_npcrobbery:isPedInTable', function(isInTable)
+                                if not isInTable then
+                                    local playerPed = PlayerPedId()
+                                    if not IsPedInAnyVehicle(playerPed, true) then
+                                        ESX.TriggerServerCallback('esx_tk_npcrobbery:checkCops', function(enough)
+                                            if enough then
+                                                if isArmed then
+                                                    if not Config.DisabledWeapons[GetSelectedPedWeapon(playerPed)] then
+                                                        if not onCooldown then
+                                                            onCooldown = true
+                                                            TriggerServerEvent('esx_tk_npcrobbery:addPedToTable', closestPed)
+                                                            chosenPed = closestPed
+                                                            npcs[chosenPed] = true
+                                                            ClearPedTasks(chosenPed)
+                                                            SetEntityAsMissionEntity(chosenPed)
+                                                            TaskChatToPed(chosenPed, playerPed)
+                                                            TryRobNPC()
+                                                        else
+                                                            wait = 300
+                                                            -- notify(_U('on_cooldown'), 'error')
+                                                        end
+                                                    else
+                                                        wait = 300
+                                                        notify(_U('need_weapon'), 'error')
+                                                    end
+                                                else
+                                                    wait = 300
+                                                    notify(_U('need_weapon'), 'error')
+                                                end
+                                            else
+                                                wait = 300
+                                                notify(_U('not_enough_police'), 'error')
+                                            end
+                                        end)
+                                    else
+                                        wait = 300
+                                        notify(_U('in_vehicle'), 'error')
+                                    end
+                                else
+                                    -- notify(_U('already_talking'), 'error')
+                                end
+                            end, closestPed)
+                        end
+                    end
+                end
+            end
+        else
+            wait = 300
+        end
+        Wait(wait)
+    end
+end)
+
+function TryRobNPC()
+    local playerPed = PlayerPedId()
+    local rnd = math.random()
+	
+	local chance = Config.RobChance / 100
+	
+	if rnd <= chance then
+--            NpcRobPlayer()
+		NpcAttackPlayer()
+	else
+		PlayerRobNPC()
+	end
+end
+
+function NpcAttackPlayer()
+	local playerPed = PlayerPedId()
+	ClearPedTasks(chosenPed)
+	GiveWeaponToPed(chosenPed, "WEAPON_COMBATPISTOL", 255, false, false)
+	TaskShootAtEntity(chosenPed, playerPed, 60, 0xD6FF6D61);
+	TaskCombatPed(chosenPed, target, 0, 16)	
+	SetPedFleeAttributes(chosenPed, 0, 0)
+end
+
+function PlayerRobNPC()
+    local playerPed = PlayerPedId()
+    local playerCoords = GetEntityCoords(playerPed)
+    local npcBeingRobbed = chosenPed
+    TaskSetBlockingOfNonTemporaryEvents(npcBeingRobbed, true)
+    HandsUpAnimation(npcBeingRobbed)
+    local inAction = true
+    local failed = false
+    if math.random() <= Config.AlertRobChanceStart / 100 then
+        AlertPolice()
+    end
+    TriggerEvent("mythic_progbar:client:progress", {
+        name = "esx_tk_npcrobbery:robNpc",
+        duration = Config.IntimidateTime,
+        label = _U('intimidate'),
+        useWhileDead = false,
+        canCancel = true,
+        controlDisables = {
+            disableMovement = false,
+            disableCarMovement = true,
+            disableMouse = false,
+            disableCombat = false,
+        },
+    }, function(status)
+        inAction = false
+        if not failed then
+            if not status then
+                GiveAnimation(playerPed)
+                GiveAnimation(chosenPed)
+                Wait(3000)
+                TriggerServerEvent('esx_tk_npcrobbery:playerRobbedNpc')
+                PedFlee(npcBeingRobbed, false, GetEntityCoords(npcBeingRobbed))
+            else
+                PedFlee(npcBeingRobbed, false, GetEntityCoords(npcBeingRobbed))
+            end
+        end
+    end)
+    local failedTimes = 0
+    while inAction and not failed do
+        Wait(100)
+        if IsPedArmed(playerPed, 1) then
+            if not IsPedInMeleeCombat(PlayerPedId()) then
+                failedTimes = failedTimes + 1
+            end
+        elseif IsPedArmed(playerPed, 4) then
+            if not IsPlayerFreeAimingAtEntity(PlayerId(), npcBeingRobbed) then
+                failedTimes = failedTimes + 1
+            end
+        else
+            failedTimes = failedTimes + 1
+        end
+        if failedTimes >= Config.MaxFailedTimes then
+            notify(_U('failed_intimidating'), 'error')
+            failed = true
+            PedFlee(npcBeingRobbed, true, GetEntityCoords(npcBeingRobbed))
+            break
+        end
+        if #(GetEntityCoords(playerPed) - GetEntityCoords(npcBeingRobbed)) >= 5 then
+            failed = true
+            PedFlee(npcBeingRobbed, true, GetEntityCoords(npcBeingRobbed))
+            break
+        end
+        if IsEntityDead(npcBeingRobbed) then
+            failed = true
+            break
+        end
+    end
+end
+
+function PedFlee(ped, cancel, coords)
+    Citizen.CreateThread(function()
+        if cancel then
+            TriggerEvent("mythic_progbar:client:cancel")
+        end
+        TaskSetBlockingOfNonTemporaryEvents(ped, false)
+        ClearPedTasks(ped)
+        Wait(700)
+        local playerPed = PlayerPedId()
+        TaskSmartFleePed(ped, playerPed, 30.0, 5000, 0, 0)
+        TriggerServerEvent('esx_tk_npcrobbery:removePedFromTable', ped)
+        while #(GetEntityCoords(playerPed) - GetEntityCoords(ped)) <= 25 do
+            Wait(1000)
+        end
+        local rnd = math.random()
+        if rnd <= Config.AlertRobChanceEnd / 100 then
+            AlertPolice()
+        end
+        SetEntityAsNoLongerNeeded(ped)
+    end)
+end
+
+function AlertPolice()
+    local playerPed = PlayerPedId()
+    local playerCoords = GetEntityCoords(playerPed)
+    if Config.EnableCallPoliceAnim then
+        CallPoliceAnim(npcBeingRobbed)
+        Wait(2000)
+    end
+    local streetName,_ = GetStreetNameAtCoord(playerCoords.x, playerCoords.y, playerCoords.z)
+    streetName = GetStreetNameFromHashKey(streetName)
+    local gender
+    local malePed = `mp_m_freemode_01`
+    if GetEntityModel(PlayerPedId()) == malePed then
+        gender = 'male'
+    else
+        gender = 'female'
+    end
+    TriggerServerEvent('esx_tk_npcrobbery:alertPolice', playerCoords, streetName, gender)
+end
+
+function NpcRobPlayer()
+    TaskSetBlockingOfNonTemporaryEvents(ped, true)
+    beingRobbed = true
+    local playerPed = PlayerPedId()
+    SetCurrentPedWeapon(playerPed, `WEAPON_UNARMED`, true)
+    GiveWeaponToPed(chosenPed, GetHashKey(Config.NpcWeapon), 100, true, true)
+    TaskAimGunAtEntity(chosenPed, playerPed, -1)
+    DrawRobbedText()
+    DisableControls()
+    Wait(1000)
+    HandsUpAnimation(playerPed)
+    Wait(2000)
+    TaskGoToEntityWhileAimingAtEntity(chosenPed, playerPed, playerPed, 0.5, false, 0, 0, 0, 0, 0)
+    local playerCoords = GetEntityCoords(playerPed)
+    local npcCoords = GetEntityCoords(chosenPed)
+    local dist = #(playerCoords - npcCoords)
+    while dist >= 1.5 do
+        npcCoords = GetEntityCoords(chosenPed)
+        dist = #(playerCoords - npcCoords)
+        Wait(50)
+    end
+    TaskAimGunAtEntity(chosenPed, playerPed, -1)
+    SetCurrentPedWeapon(chosenPed, `WEAPON_UNARMED`, true)
+    RemoveWeaponFromPed(chosenPed, GetHashKey(Config.NpcWeapon))
+    if not IsPedDeadOrDying(chosenPed, 1) then
+        GiveAnimation(playerPed)
+        GiveAnimation(chosenPed)
+        TriggerServerEvent('esx_tk_npcrobbery:npcRobbedPlayer')
+    end
+    Wait(1000)
+    beingRobbed = false
+    TaskSmartFleePed(chosenPed, playerPed, 30.0, 5000, 0, 0)
+    TaskSetBlockingOfNonTemporaryEvents(ped, false)
+    TriggerServerEvent('esx_tk_npcrobbery:removePedFromTable', chosenPed)
+    SetEntityAsNoLongerNeeded(chosenPed)
+end
+
+function DrawRobbedText()
+    Citizen.CreateThread(function()
+        while beingRobbed do
+            local closestPedCoords = GetEntityCoords(closestPed)
+            local drawCoords = vector3(closestPedCoords.x, closestPedCoords.y, closestPedCoords.z + 0.82)
+            DrawText3D(drawCoords, _U('robbed', amount, price))
+            Wait(0)
+        end
+    end)
+end
+
+function DisableControls()
+    Citizen.CreateThread(function()
+        local playerPed = PlayerPedId()
+        SetCurrentPedWeapon(playerPed, `WEAPON_UNARMED`, true)
+        while beingRobbed do
+            Wait(0)
+            DisablePlayerFiring(playerPed, true)
+            DisableControlAction(0, 30,  true) -- Moving
+            DisableControlAction(0, 31,  true) -- Moving
+            DisableControlAction(0, 24, true) -- Attack
+            DisableControlAction(0, 257, true) -- Attack 2
+            DisableControlAction(0, 25, true) -- Aim
+            DisableControlAction(0, 263, true) -- Melee Attack 1
+            DisableControlAction(0, 22, true) -- Jump
+            DisableControlAction(0, 44, true) -- Cover
+            DisableControlAction(0, 37, true) -- Select Weapon
+            DisableControlAction(0, 288,  true) -- Disable phone
+            DisableControlAction(0, 289, true) -- Inventory
+            DisableControlAction(0, 170, true) -- F3 Menu
+            DisableControlAction(0, 167, true) -- Job
+            DisableControlAction(0, 318, true) -- Animation menu
+            DisableControlAction(0, 137, true) -- Radio
+            DisableControlAction(2, 36, true) -- Disable going stealth
+            DisableControlAction(0, 47, true)  -- Disable weapon
+            DisableControlAction(0, 264, true) -- Disable melee
+            DisableControlAction(0, 257, true) -- Disable melee
+            DisableControlAction(0, 140, true) -- Disable melee
+            DisableControlAction(0, 141, true) -- Disable melee
+            DisableControlAction(0, 142, true) -- Disable melee
+            DisableControlAction(0, 143, true) -- Disable melee
+            DisableControlAction(0, 75, true)  -- Disable exit vehicle
+            DisableControlAction(27, 75, true) -- Disable exit vehicle
+            DisableControlAction(0, 73, true) -- Disable clearing animation
+        end
+    end)
+end
+
+RegisterNetEvent('esx_tk_npcrobbery:alertPolice')
+AddEventHandler('esx_tk_npcrobbery:alertPolice', function(coords, street, gender)
+    if Config.Blip.PlaySound then
+        PlaySoundFrontend(-1, "Event_Start_Text", "GTAO_FM_Events_Soundset", 0)
+    end
+    ESX.ShowAdvancedNotification(_U('robbery_title'), '', _U('robbery_msg', gender, street), 'CHAR_CALL911', 1)
+    local alpha = 250
+    local blip = AddBlipForCoord(coords.x, coords.y, coords.z)
+    
+    SetBlipSprite(blip, Config.Blip.Sprite)
+    SetBlipColour(blip, Config.Blip.Color)
+    SetBlipAlpha(blip, alpha)
+    SetBlipScale(blip, Config.Blip.Scale)
+    BeginTextCommandSetBlipName("STRING")
+    AddTextComponentString(_U('blip_title'))
+    EndTextCommandSetBlipName(blip)
+
+    while alpha ~= 0 do
+        Wait(Config.Blip.Time * 4)
+        alpha = alpha - 1
+        SetBlipAlpha(blip, alpha)
+
+        if alpha == 0 then
+            RemoveBlip(blip)
+            return
+        end
+    end
+end)
+
+function GiveAnimation(ped)
+	Citizen.CreateThread(function()                          
+		RequestAnimDict("mp_common")            
+		while not HasAnimDictLoaded("mp_common") do                
+			Wait(10)            
+		end
+		TaskPlayAnim(ped, "mp_common", "givetake2_a", 8.0, 4.0, -1, 48, 0, 0, 0, 0)
+	end)
+end
+
+function HandsUpAnimation(ped)
+	Citizen.CreateThread(function()
+        RequestAnimDict("missminuteman_1ig_2")
+        while not HasAnimDictLoaded("missminuteman_1ig_2") do
+            Wait(10)
+        end
+        TaskPlayAnim(ped, "missminuteman_1ig_2", "handsup_enter", 8.0, 8.0, -1, 50, 0, false, false, false)
+    end)
+end
+
+function CallPoliceAnim(ped)
+	Citizen.CreateThread(function()
+        RequestAnimDict("cellphone@")
+        while not HasAnimDictLoaded("cellphone@") do
+            Wait(10)
+        end
+        TaskPlayAnim(ped, "cellphone@", "cellphone_text_read_base", 2.0, 2.0, -1, 51, 0, false, false, false)
+        AddPropToPed(ped, 'prop_npc_phone_02', 28422, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+        Wait(Config.AnimationTime)
+        ClearPedTasks(ped)
+        DeleteObject(prop)
+        TriggerServerEvent('esx_tk_npcrobbery:removePedFromTable', chosenPed)
+        SetEntityAsNoLongerNeeded(ped)
+    end)
+end
+
+function AddPropToPed(ped, propModel, bone, off1, off2, off3, rot1, rot2, rot3)
+	Citizen.CreateThread(function()
+        local coords = GetEntityCoords(ped)
+    
+        if not HasModelLoaded(propModel) then
+            LoadPropDict(GetHashKey(propModel))
+        end
+    
+        prop = CreateObject(GetHashKey(propModel), coords.x, coords.y, coords.z + 0.2,  true,  true, true)
+        AttachEntityToEntity(prop, ped, GetPedBoneIndex(ped, bone), off1, off2, off3, rot1, rot2, rot3, true, true, false, true, 1, true)
+        SetModelAsNoLongerNeeded(propModel)
+    end)
+end
+
+function LoadPropDict(model)
+    while not HasModelLoaded(model) do
+        RequestModel(model)
+        Wait(10)
+    end
+end
+
+function notify(text, type)
+    if Config.NotificationType == 'mythic' then
+        exports['mythic_notify']:DoHudText(type, text)
+    else
+        ESX.ShowNotification(text)
+    end
+end
+
+DrawText3D = function(coords, text)
+    local str = text
+
+    local start, stop = string.find(text, "~([^~]+)~")
+    if start then
+        start = start - 2
+        stop = stop + 2
+        str = ""
+        str = str .. string.sub(text, 0, start) .. "   " .. string.sub(text, start+2, stop-2) .. string.sub(text, stop, #text)
+    end
+
+    AddTextEntry(GetCurrentResourceName(), str)
+    BeginTextCommandDisplayHelp(GetCurrentResourceName())
+    EndTextCommandDisplayHelp(2, false, false, -1)
+
+	SetFloatingHelpTextWorldPosition(1, coords)
+	SetFloatingHelpTextStyle(1, 1, 2, 1, 3, -30)
+end
+

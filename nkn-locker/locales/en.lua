@@ -1,0 +1,17 @@
+Locales['en'] = {
+    ['arg_error_to_create'] = "Your third argument must be a number. This shall be the price.",
+    ['arg_error_to_create_2'] = "Use the command like this: /createlocker UniqueLockerName 50 5000",
+    ['arg_error_to_create_3'] = "Your second argument must be a number. This is supposed to be the locker size.",
+    ['arg_error_to_create_4'] = 'The locker name %s already exists. Try another',
+    ['arg_error_to_create_5'] = 'You are not authorized to execute this command!',
+    ['buy_sucesfully'] = "You have successfully rented a locker for %s. The rental period is %s days.",
+    ['buy_failed'] = "You don't have enough money.",
+    ['rent_ended'] = "The rental period of your locker has expired. Your locker has been emptied!",
+    ['stash_full'] = "There isn't that much space in the locker",
+    ['dont_have_enough'] = "You don't have so many items!",
+    ['has_already_weapon'] = "You already have a %s",
+    ['not_enough_in_stash'] = "There's not that much item in the locker",
+    ['help_notification'] = "Press ~INPUT_CONTEXT~ to open the locker.\nRemaining rental period: ~b~%s hours",
+    ['help_notification_2'] = "Press ~INPUT_CONTEXT~ to rent the locker.\nPrice: ~b~$%s",
+    ['invalid_count'] = "Invalid amount",
+}

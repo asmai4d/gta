@@ -1,0 +1,10 @@
+D:\__RESOURCES\SeatBelt\Server\bin\Debug\netstandard2.0\SeatBelt.Server.deps.json
+D:\__RESOURCES\SeatBelt\Server\bin\Debug\netstandard2.0\SeatBelt.Server.net.dll
+D:\__RESOURCES\SeatBelt\Server\bin\Debug\netstandard2.0\SeatBelt.Server.net.pdb
+D:\__RESOURCES\SeatBelt\Server\obj\Debug\netstandard2.0\SeatBelt.Server.csproj.AssemblyReference.cache
+D:\__RESOURCES\SeatBelt\Server\obj\Debug\netstandard2.0\SeatBelt.Server.GeneratedMSBuildEditorConfig.editorconfig
+D:\__RESOURCES\SeatBelt\Server\obj\Debug\netstandard2.0\SeatBelt.Server.AssemblyInfoInputs.cache
+D:\__RESOURCES\SeatBelt\Server\obj\Debug\netstandard2.0\SeatBelt.Server.AssemblyInfo.cs
+D:\__RESOURCES\SeatBelt\Server\obj\Debug\netstandard2.0\SeatBelt.Server.csproj.CoreCompileInputs.cache
+D:\__RESOURCES\SeatBelt\Server\obj\Debug\netstandard2.0\SeatBelt.Server.net.dll
+D:\__RESOURCES\SeatBelt\Server\obj\Debug\netstandard2.0\SeatBelt.Server.net.pdb

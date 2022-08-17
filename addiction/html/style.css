@@ -1,0 +1,53 @@
+html {
+	overflow: hidden;
+}
+
+body {
+	margin: 0px;
+	padding: 0px;
+}
+
+#container {
+	position: absolute;
+	top: 87%;
+	left: 1%; /*25*/
+	width: 50px;
+	height: 50px;
+	display: none;
+	flex-direction: column;
+}
+
+header {
+	width: 50px;
+	height: 50px;
+	opacity: 1;
+}
+
+header img {
+	width: 50px;
+	height: 50px;
+}
+
+.blink-image {
+    /* -moz-animation: blink normal 1s infinite ease-in-out;
+    -webkit-animation: blink normal 1s infinite ease-in-out;
+    animation: blink normal 1s infinite ease-in-out; */
+}
+
+@-moz-keyframes blink {
+    0% {opacity:1;}
+    50% {opacity:0;}
+    100% {opacity:1;}
+} 
+
+@-webkit-keyframes blink {
+    0% {opacity:1;}
+    50% {opacity:0;}
+    100% {opacity:1;}
+}
+
+@keyframes blink {
+    0% {opacity:1;}
+    50% {opacity:0;}
+    100% {opacity:1;}
+} 

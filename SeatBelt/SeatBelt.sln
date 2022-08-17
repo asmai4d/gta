@@ -1,0 +1,27 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26124.0
+MinimumVisualStudioVersion = 15.0.26124.0
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeatBelt.Client", "Client\SeatBelt.Client.csproj", "{64764A11-B58E-4545-844E-09C2454379F9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeatBelt.Server", "Server\SeatBelt.Server.csproj", "{ACD8CB1D-3CF4-4216-93D0-87A999F2B3A3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{64764A11-B58E-4545-844E-09C2454379F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64764A11-B58E-4545-844E-09C2454379F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64764A11-B58E-4545-844E-09C2454379F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64764A11-B58E-4545-844E-09C2454379F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACD8CB1D-3CF4-4216-93D0-87A999F2B3A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACD8CB1D-3CF4-4216-93D0-87A999F2B3A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACD8CB1D-3CF4-4216-93D0-87A999F2B3A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACD8CB1D-3CF4-4216-93D0-87A999F2B3A3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

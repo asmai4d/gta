@@ -1,0 +1,8 @@
+D:\__RESOURCES\SeatBelt\Client\bin\Debug\net452\SeatBelt.Client.net.dll
+D:\__RESOURCES\SeatBelt\Client\bin\Debug\net452\CitizenFX.Core.Client.dll
+D:\__RESOURCES\SeatBelt\Client\obj\Debug\net452\SeatBelt.Client.GeneratedMSBuildEditorConfig.editorconfig
+D:\__RESOURCES\SeatBelt\Client\obj\Debug\net452\SeatBelt.Client.AssemblyInfoInputs.cache
+D:\__RESOURCES\SeatBelt\Client\obj\Debug\net452\SeatBelt.Client.AssemblyInfo.cs
+D:\__RESOURCES\SeatBelt\Client\obj\Debug\net452\SeatBelt.Client.csproj.CoreCompileInputs.cache
+D:\__RESOURCES\SeatBelt\Client\obj\Debug\net452\SeatBelt.Client.csproj.CopyComplete
+D:\__RESOURCES\SeatBelt\Client\obj\Debug\net452\SeatBelt.Client.net.dll

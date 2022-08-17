@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "zvi/3HC3oQK/d1GWVwUV7BXIF+3b5ad1irX1sXG1keatRWnz9KmZCb+xAORgEa/7bgapVfLWBpjX8lioNjnelA==",
+  "success": true,
+  "projectFilePath": "D:\\__RESOURCES\\seatbelt\\Client\\SeatBelt.Client.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\strea\\.nuget\\packages\\citizenfx.core.client\\1.0.5729\\citizenfx.core.client.1.0.5729.nupkg.sha512",
+    "C:\\Users\\strea\\.nuget\\packages\\citizenfx.framework.client\\0.2.3\\citizenfx.framework.client.0.2.3.nupkg.sha512"
+  ],
+  "logs": []
+}

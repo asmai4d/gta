@@ -1,0 +1,20 @@
+{
+    "Lua.diagnostics.globals": [
+        "TriggerEvent",
+        "TriggerServerEvent",
+        "RegisterServerEvent",
+        "AddEventHandler",
+        "source",
+        "MySQL",
+        "TriggerClientEvent",
+        "_U",
+        "Citizen",
+        "PlayerPedId",
+        "createBlips",
+        "AddBlipForCoord",
+        "RegisterNetEvent",
+        "DrawMarker",
+        "GetDistanceBetweenCoords",
+        "IsControlJustReleased"
+    ]
+}

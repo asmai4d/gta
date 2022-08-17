@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "64764a11-b58e-4545-844e-09c2454379f9": {
+      "ProjectGuid": "64764a11-b58e-4545-844e-09c2454379f9",
+      "DisplayName": "SeatBelt.Client",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}

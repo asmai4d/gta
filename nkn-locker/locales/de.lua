@@ -1,0 +1,17 @@
+Locales['de'] = {
+    ['arg_error_to_create'] = "Dein drittes Argument muss eine Zahl sein. Dies soll der Preis sein.",
+    ['arg_error_to_create_2'] = "Nutze den command wie folgt: /createlocker UniqueLockerName 50 5000",
+    ['arg_error_to_create_3'] = "Dein zweites Argument muss eine Zahl sein. Dies soll die Schließfachgröße sein.",
+    ['arg_error_to_create_4'] = 'Der Schließfachname %s existiert bereits. Probiere ein anderen',
+    ['arg_error_to_create_5'] = 'Du bist nicht berechtigt diesen Comamnd auszuführen!',
+    ['buy_sucesfully'] = "Du hast erfolgreich ein Schließfach für %s gemietet. Die Mietlaufzeit beträgt %s Tage.",
+    ['buy_failed'] = "Du hast nicht genügend Geld dabei.",
+    ['rent_ended'] = "Die Mietlaufzeit deines Schließfaches ist abgelaufen. Dein Schließfach wurde leer gemacht!",
+    ['stash_full'] = "So viel Platz ist nicht im Spind",
+    ['dont_have_enough'] = "So viel hast du nicht dabei",
+    ['has_already_weapon'] = "Du hast bereits eine %s",
+    ['not_enough_in_stash'] = "Soviel ist nicht im Schließfach",
+    ['help_notification'] = "Drücke ~INPUT_CONTEXT~ um das Schließfach zu öffnen.\nVerbleibende Mietlaufzeit: ~b~%s Stunden",
+    ['help_notification_2'] = "Drücke ~INPUT_CONTEXT~ um das Schließfach zu mieten.\nPreis: ~b~$%s",
+    ['invalid_count'] = "Ungültige Menge",
+}

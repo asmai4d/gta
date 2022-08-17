@@ -1,0 +1,166 @@
+@import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri&display=swap');
+body {
+    margin: 0;
+    left: 0;
+    top: 0;
+}
+
+img {
+	position: relative;
+	z-index: 1;
+	margin-right: auto;
+	margin-top: -50%;
+	font-size: 10px;
+}
+
+.slideshow-container {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	opacity: 1.0;
+    background-color: #181520;
+	width: 750px;
+	height: 600px;
+	border-radius: 5px;
+}
+
+.menuheader {
+	background-color: #c772d0;
+	position: absolute;
+	left: 50%;
+	top: 3.4%;
+	transform: translate(-50%, -50%);
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+    width: 750px;
+	height: 39.9px;
+	animation: fade 5s ease infinite;
+}
+
+.menu p {
+	position: relative;
+	z-index: 1;
+	margin-top: 0.8%;
+	color: rgb(255, 255, 255, 0.9);
+	font-family: 'Hind Siliguri', sans-serif;
+    text-align: center;
+}
+
+.menu-img {
+	display: inline-block;
+	margin-top: 0.8%;
+}
+
+.menuheader {
+    -webkit-animation: Fade 5s ease infinite;
+    -moz-animation: Fade 5s ease infinite;
+    animation: Fade 5s ease infinite;
+}
+
+.job {
+	display: none;
+	position: absolute;
+	text-align: center;
+	left: 50%;
+	color: white;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	font-family: 'Hind Siliguri', sans-serif;
+	font-size: 20px;
+}
+
+.container {
+	position: relative;
+	white-space: nowrap;
+	overflow-x: hidden;
+	height: 100em;
+	width: 100em;
+	top: 40vh;
+	margin: auto;
+	-webkit-transform: translateY(-7.2em);
+	transform: translateY(-7.2em);
+}
+
+.prev, .next {
+	cursor: pointer;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	width: auto;
+	padding: 16px;
+	color: rgb(255, 255, 255); /*#888*/
+	font-weight: bold;
+	font-size: 20px;
+	border-radius: 0 3px 3px 0;
+	user-select: none;
+}
+  
+.next {
+	position: absolute;
+	right: 0;
+	border-radius: 3px 0 0 3px;
+}
+   
+.prev:hover, .next:hover {
+	opacity: 1.0;
+	background-color: #c772d0b7;
+	color: white;
+}
+
+	p {margin: 10px;}
+
+
+.author {
+	position: relative;
+	bottom: 0px;
+	color: #ffffff; 
+	font-size: 25px;
+}
+
+.content {font-size: 15px;}
+
+.button {
+  position: relative;
+  top: 60px;
+  padding-top: 7.5px;
+  padding-bottom: 7.5px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 10px;
+  /*background:rgb(0, 238, 255);*/
+  background-color: #c772d0;
+  /*color: black;*/
+}
+
+.button:hover {
+	background-color: #c772d0c2;
+}
+
+@-webkit-keyframes Fade {
+	0%{background-position:0% 50%}
+	50%{background-position:100% 50%}
+	100%{background-position:0% 50%}
+}
+  
+@-moz-keyframes Fade {
+	0%{background-position:0% 50%}
+	50%{background-position:100% 50%}
+	100%{background-position:0% 50%}
+}
+  
+@keyframes Fade { 
+	0%{background-position:0% 50%}
+	50%{background-position:100% 50%}
+	100%{background-position:0% 50%}
+}
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome and Opera */
+}

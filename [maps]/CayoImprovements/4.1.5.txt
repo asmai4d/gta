@@ -1,0 +1,45 @@
+4.1.5 Changes:
+
+- Added IPL toggles to load and unload the IPLs depending on
+whether or not the player is on or off the island
+
+- Renamed some natives
+
+- Added more lights to the Cabin
+
+- Added blockers to stop cars from entering the Beach Party
+
+- Added lights in front of blockers for vehicle parking
+
+- Added mat and Valet stand
+
+
+
+
+
+--------------------------------------------------------------
+
+
+4.1.4 Changes:
+
+
+- Replaced beach party chairs and increased LOD
+
+
+- Replaced submersibles with the dinghy model
+
+
+- Increased underwater UFO LOD
+
+- Increased lighthouse LOD
+
+- Increased tower LOD
+
+- Replaced SetDeepOceanScaler with LoadGlobalWaterType
+
+- Added Loch Ness Monster
+
+- Added generator back to dockss near NPC staring at (previously) "nothing"
+
+- Added Beach Party Bar props
+

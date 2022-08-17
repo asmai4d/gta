@@ -1,0 +1,18 @@
+[
+    {
+        "ID"        :   1,
+        "Prop"      :   "prop_elecbox_16",
+        "x"         :   1836.89,
+        "y"         :   2599.72,
+        "z"         :   44.56,
+        "rx"        :   0,
+        "ry"        :   0,
+        "rz"        :   179.18,
+        "Passcode"  :   "1234",
+        "AlarmTones":   [
+            "fire",
+            "rescue"
+        ],
+		"_comment"  :   "Mission Row: Located near cells downstairs"
+    }
+]
